@@ -5,9 +5,11 @@ import android.os.AsyncTask.execute
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.lifecycle.LiveData
 import org.json.JSONObject
 import java.net.URL
 import java.text.SimpleDateFormat
@@ -15,14 +17,48 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val CITY: String = "Osinniki,ru"
+    private var CITY: String = "Осинники,ru"
     private val API: String = "c401936af10785ea89f576d59c7eab75"
+    val searchFragment = SearchCityFragment()
+    val viewModel = WeatherViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         weatherTask().execute()
+
+        val addressTv = findViewById<TextView>(R.id.address)
+        addressTv.setOnClickListener{
+            openSearchMenu()
+        }
+
+        val liveData: LiveData<String> = viewModel.city
+        liveData.observe(this, androidx.lifecycle.Observer {
+            CITY = it+",ru"
+            weatherTask().execute()
+            supportFragmentManager.beginTransaction().apply {
+                remove(searchFragment)
+                commit()
+                val addressCont = findViewById<LinearLayout>(R.id.adressContainer)
+                addressCont.visibility = View.VISIBLE
+            }
+        })
+
+        searchFragment.viewModel = viewModel
+
+    }
+
+    fun openSearchMenu(){
+
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.searchFragment, searchFragment)
+            commit()
+        }
+
+        val addressCont = findViewById<LinearLayout>(R.id.adressContainer)
+        addressCont.visibility = View.INVISIBLE
+
     }
 
     inner class weatherTask(): AsyncTask<String, Void, String>(){
