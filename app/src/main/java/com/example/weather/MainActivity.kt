@@ -4,11 +4,13 @@ import android.os.AsyncTask
 import android.os.AsyncTask.execute
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LiveData
 import org.json.JSONObject
 import java.net.URL
@@ -37,28 +39,44 @@ class MainActivity : AppCompatActivity() {
         liveData.observe(this, androidx.lifecycle.Observer {
             CITY = it+",ru"
             weatherTask().execute()
-            supportFragmentManager.beginTransaction().apply {
-                remove(searchFragment)
-                commit()
-                val addressCont = findViewById<LinearLayout>(R.id.adressContainer)
-                addressCont.visibility = View.VISIBLE
-            }
+            closeSearchMenu()
         })
 
         searchFragment.viewModel = viewModel
 
     }
 
-    fun openSearchMenu(){
+    override fun onBackPressed() {
 
+        val count = supportFragmentManager.backStackEntryCount
+        if (count != 0){
+            closeSearchMenu()
+        }else{
+            super.onBackPressed()
+        }
+    }
+
+    fun openSearchMenu(){
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.searchFragment, searchFragment)
+            addToBackStack(null)
+            add(R.id.searchFragment, searchFragment)
             commit()
         }
 
         val addressCont = findViewById<LinearLayout>(R.id.adressContainer)
         addressCont.visibility = View.INVISIBLE
 
+    }
+
+    fun closeSearchMenu(){
+
+        supportFragmentManager.beginTransaction().apply {
+            remove(searchFragment)
+            commit()
+            val addressCont = findViewById<LinearLayout>(R.id.adressContainer)
+            addressCont.visibility = View.VISIBLE
+        }
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }
 
     inner class weatherTask(): AsyncTask<String, Void, String>(){

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,16 +8,42 @@
     android:background="#FFFFFF"
     android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/searchEt"
-            android:hint=" Search..."
-            android:layout_margin="20dp"
-            android:padding="5dp"
-            android:background="@drawable/round_corners"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        </EditText>
+                <ImageView
+                    android:id="@+id/backIv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="?attr/actionModeCloseDrawable"
+                    app:srcCompat="@drawable/go_back_round" />
+
+                <EditText
+                    android:id="@+id/searchEt"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/round_corners"
+                    android:hint=" Search..."
+                    android:inputType="textCapWords"
+                    android:padding="5dp">
+
+                </EditText>
+
+
+        </LinearLayout>
+
+
 
         <View
             android:id="@+id/line"

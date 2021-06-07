@@ -9,12 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CitiesListAdapterRv: RecyclerView.Adapter<CitiesListAdapterRv.ViewHolder>() {
 
-    var array = mutableListOf<String>()
+    var array = listOf<String>()
     lateinit var changeClouser: (String) -> Unit
 
     fun setData(cities: MutableList<String>, clouser: (String) -> Unit){
         array = cities
         changeClouser = clouser
+        notifyDataSetChanged()
+    }
+
+    fun setDataForSearch(cities: List<String>){
+        array = cities
         notifyDataSetChanged()
     }
 
