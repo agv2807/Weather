@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SearchCityFragment"
-    android:background="#FFFFFF"
+    tools:context=".home_screen.search_menu.SearchCityFragment"
+    android:background="@drawable/round_corners_white"
     android:orientation="vertical">
 
         <LinearLayout
@@ -15,55 +15,44 @@
 
                 <ImageView
                     android:id="@+id/backIv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
-                    android:src="?attr/actionModeCloseDrawable"
-                    app:srcCompat="@drawable/go_back_round" />
+                    app:tint="@color/black"
+                    android:src="@drawable/close" />
 
                 <EditText
                     android:id="@+id/searchEt"
+                    android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="20dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:background="@drawable/round_corners"
                     android:hint=" Search..."
                     android:inputType="textCapWords"
-                    android:padding="5dp">
-
-                </EditText>
-
+                    android:padding="5dp"/>
 
         </LinearLayout>
 
-
-
         <View
             android:id="@+id/line"
-
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#000000"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
-        </View>
+            android:layout_marginRight="20dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/citiesListRv"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/cities_list_container"
             android:layout_margin="20dp"
-            android:padding="5dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-
+            android:layout_height="wrap_content"/>
 
 </LinearLayout>
